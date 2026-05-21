@@ -1,0 +1,20 @@
+Installing Jenkins
+
+Step 1: Install Java 21
+sudo yum install java-21-amazon-corretto -y
+
+Step 2: Update Jenkins Repository & 2026 Key
+Fetch the updated repo configuration file and import the new 2026 GPG signing key:
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/rpm-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/rpm-stable/jenkins.io-2026.key
+
+Step 3: install Jenkins
+sudo yum install jenkins -y
+
+Step 4: Start Jenkins
+sudo systemctl start jenkins.service
+sudo systemctl status jenkins.service
+
+Step 5:Enable Jenkins to Start on Boot
+
+chkconfig jenkins on
