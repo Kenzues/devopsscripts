@@ -1,9 +1,20 @@
+#!/bin/bash
+
+# 1. Install the missing legacy crypto library (Handles the Python error)
+if command -v apt-get &> /dev/null; then
+    sudo apt-get update && sudo apt-get install -y libcrypt1
+elif command -v dnf &> /dev/null; then
+    sudo dnf install -y libxcrypt-compat
+fi
+
+# 2. Download Docker Compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
-ls /usr/local/bin/
-
-sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-
+# 3. Make it executable
 sudo chmod +x /usr/local/bin/docker-compose
 
+# 4. Create symlink forcing overwrite (-sf) to prevent "File exists" error
+sudo ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+# 5. Verify the installation
 docker-compose version
